@@ -10,6 +10,7 @@ function Signin() {
   const [phoneNumberReq, setphoneNumberReq] = useState("");
   const [passWordReq, setpassWordReq] = useState("");
   const [conformPassword, setConformPassword] = useState();
+  const[userNameExists,setUserNameExists]=useState('');
   function handleChange(e) {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
@@ -28,17 +29,17 @@ function Signin() {
 
     // phoneNumberValidation
     const validPhoneNumber = /^(0|[1-9]\d*)$/.test(userDetails.phoneNumber);
-    const phoneNumberRequired = !validPhoneNumber
+    const phoneNumberRequired =userDetails.phoneNumber.length==0?"required":!validPhoneNumber
       ? "digits only"
       : userDetails.phoneNumber.length > 10 ||
         userDetails.phoneNumber.length < 10
       ? "must filled 10 digits"
       : "";
     //password validation
-    const passWordRequired =
+    const passWordRequired =userDetails.passWord.length==0?"required":
       userDetails.passWord === conformPassword
         ? ""
-        : "enter the correct password";
+        : "mismatch password";
     setpassWordReq(passWordRequired);
     setphoneNumberReq(phoneNumberRequired);
     if (
@@ -59,14 +60,18 @@ function Signin() {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
+          console.log("data",data);
+          if(data.body==="username already exists")
+          {
+            setUserNameExists("username already exists")
+          }
         })
         .catch((err) => {
           console.log(err);
         });
       console.log("vijay");
       } catch (error) {
-        console.log("fetcb=h data error",error)
+        console.log("fetch data error",error)
       }
     }
   };
@@ -115,6 +120,7 @@ function Signin() {
           <button onClick={handleSubmit}>SignIn</button>
         </div>
       </form>
+      <p>{userNameExists}</p>
     </>
   );
 }
