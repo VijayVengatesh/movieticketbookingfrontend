@@ -3,7 +3,8 @@ import './App.css';
 import Signin from './Signin';
 import Login from './Login';
 import AdminPage from './AdminPage';
-import ImageUploader from './ImageUploader';
+import Movies from './Movies';
+
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
    {/* <Signin/> */}
    {/* <Login/> */}
    <AdminPage/>
-   {/* <ImageUploader/> */}
+   {/* <Movies/> */}
    </>
   );
 }
